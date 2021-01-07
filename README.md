@@ -19,4 +19,4 @@ This repository is a customized and containerized development environment for Ap
 After you have established your environment variables:
 
 - Run `docker-compose up -d --build`
-- 
+- Navigate to `localhost:8080/admin` for the web admin interface.
