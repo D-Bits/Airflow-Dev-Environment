@@ -1,0 +1,7 @@
+
+# Ignore venv
+env/
+# Ignore .env file
+.env
+
+container-erros.log

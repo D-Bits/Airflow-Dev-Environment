@@ -1,0 +1,43 @@
+version: "3.7"
+
+services:
+    postgres:
+        image: postgres:13.1-alpine
+        env_file: .env
+        volumes:
+            - postgres_airflow_data:/var/lib/postgresql/data
+        ports:
+          - "2345:5432"
+        
+    airflow:
+        build: .
+        image: customairflowsetup:latest
+        command: webserver
+        user: airflow
+        depends_on:
+            - postgres
+        environment:
+            - PYTHONDONTWRITEBYTECODE=1
+            - LOAD_EX=n
+            - EXECUTOR=${EXECUTOR}
+            - RT_DIR=/opt/recurring-tasks  
+            - AIRFLOW__WEBSERVER__SECRET_KEY=${SECRET_KEY}
+        env_file: .env  # this file needs to have the SECRET_KEY env var, generate using `openssl rand -hex 30`
+        ports:
+            - "8080:8080"
+        volumes:
+            - "./dags:/usr/local/airflow/dags" 
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 3
+                window: 30s
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+
+volumes:
+    postgres_airflow_data:

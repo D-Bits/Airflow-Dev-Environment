@@ -1,0 +1,33 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compose Up",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": [
+                "up",
+                "-d",
+                "--build"
+            ]
+        },
+        {
+            "label": "Compose Down",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": [
+                "down"
+            ]
+        },
+        {
+            "label": "Create airflow.cfg",
+            "command": "docker-compose",
+            "args": [
+                "exec",
+                
+            ]
+        }
+    ]
+}
