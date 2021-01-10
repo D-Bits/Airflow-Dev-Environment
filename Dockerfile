@@ -1,4 +1,4 @@
-FROM python:3.8.5-slim
+FROM python:3.8.5-buster
 
 # Environment variables
 ENV DEBIAN_FRONTEND="noninteractive" \
@@ -41,9 +41,7 @@ RUN useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow && \
 COPY requirements.txt ./requirements.txt
 
 # Install Airflow and Python libraries (and clean up requirements)
-RUN pip install --no-cache-dir -r requirements.txt \
-    --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.0.0/constraints-3.8.txt" \
-    && rm requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt 
 
 EXPOSE 8080 5555 8793
 
