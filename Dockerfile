@@ -1,4 +1,4 @@
-FROM python:3.8.5-buster
+FROM python:3.8.7-buster
 
 # Environment variables
 ENV DEBIAN_FRONTEND="noninteractive" \

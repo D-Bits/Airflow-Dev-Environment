@@ -10,8 +10,9 @@ services:
           - "2345:5432"
         
     airflow:
-        build: .
-        image: customairflowsetup:latest
+        build: 
+            context: .
+            dockerfile: Dockerfile
         command: webserver
         user: airflow
         depends_on:
