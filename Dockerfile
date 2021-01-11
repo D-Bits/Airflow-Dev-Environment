@@ -1,4 +1,4 @@
-FROM python:3.8.7-buster
+FROM python:3.7-slim-buster
 
 # Environment variables
 ENV DEBIAN_FRONTEND="noninteractive" \
@@ -7,11 +7,11 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
+USER root
+
 # Add Airflow user & home
-RUN useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow && \
-    chown -R airflow: ${AIRFLOW_HOME}  && \
-    # Install apt packages
-    apt-get update && apt-get install -yqq \
+RUN apt-get update && apt-get install -yqq \
+    apt-utils \
     build-essential \
     zlib1g-dev \
     libncurses5-dev \
@@ -36,6 +36,9 @@ RUN useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow && \
         /usr/share/man \
         /usr/share/doc \
         /usr/share/doc-base
+
+RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade pip setuptools wheel
 
 # Python requirements
 COPY requirements.txt ./requirements.txt
